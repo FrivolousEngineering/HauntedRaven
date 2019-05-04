@@ -1,0 +1,36 @@
+<!doctype html>
+<title>ADMIN TOOLS :D</title>
+<h1>Admin page</h1>
+<script src="templates/jquery-3.1.1.js"></script>
+
+The Haunted Raven control page. Nothing to see here just yet. Please move along!
+<div id="message"></div>
+
+<script>
+    // Handle the POST calls of all forms
+    $(document).on("submit", "form", function(event)
+    {
+        event.preventDefault();
+        var url=$(this).attr("action");
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "JSON",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            beforeSend: function()
+            {
+                $("#message").html("sending...");
+            },
+            success: function(data)
+            {
+                $("#message").html("");
+            },
+            error: function (xhr, description, error)
+            {
+                $("#message").html(error);
+            }
+        });
+    });
+</script>
