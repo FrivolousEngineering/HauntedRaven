@@ -1,25 +1,25 @@
-
-
 ### Sequence subroutines: ###
+
 # MoveToDefaultAndUnpower
 sub MoveToDefaultAndUnpower
-  5345 6016 5580 7008 4750 frame_0..4 # MoveToNeutral
-  0 0 0 0 0 frame_0..4 # DePower
+  500 5345 6016 5580 7008 4750 frame_0..4 # MoveToNeutral
+  500 0 0 0 0 0 frame_0..4 # DePower
   return
 # NodNo
 sub NodNo
-  5345 6016 5580 7008 4750 frame_0..4 # NeutralPosition
-  5115 7812 5958 frame_1_3_4 # HeadRight
-  5600 7400 5875 7008 4750 frame_0..4 # MiddleBeakOpen
-  5465 8832 3652 7812 6235 frame_0..4 # HeadLeft
-  5345 6016 5580 7008 4750 frame_0..4 # NeutralPositionEnd
+  500 5345 6016 5580 7008 4750 frame_0..4 # NeutralPosition
+  500 5115 7812 5958 frame_1_3_4 # HeadRight
+  300 5600 7400 5875 7008 4750 frame_0..4 # MiddleBeakOpen
+  500 5465 8832 3652 7812 6235 frame_0..4 # HeadLeft
+  1000 5345 6016 5580 7008 4750 frame_0..4 # NeutralPositionEnd
   return
 # NodYes
 sub NodYes
-  0 6016 5580 7008 4710 frame_0..4 # NeutralPosition
-  3514 7837 6021 frame_2..4 # HeadUp
-  7685 6722 4835 frame_2..4 # HeadDown
-  5580 7902 4710 frame_2..4 # NeutralPositionEnd
+  500 5345 6016 5580 7008 4710 frame_0..4 # NeutralPosition
+  900 5646 3514 7837 6021 frame_0_2..4 # HeadUp
+  1000 5345 5856 7008 4710 frame_0_2..4 # Frame 4
+  1000 5170 7744 6398 6190 frame_0_2..4 # HeadDownWingUp
+  1000 5345 5580 7902 4710 frame_0_2..4 # NeutralPositionEnd
   return
 
 sub frame_0..4
@@ -38,10 +38,11 @@ sub frame_1_3_4
   moving_wait
   return
 
-sub frame_2..4
+sub frame_0_2..4
   4 servo
   3 servo
   2 servo
+  0 servo
   moving_wait
   return
 
@@ -52,3 +53,5 @@ sub moving_wait
     # wait until it is no longer moving
   repeat
   return
+
+
