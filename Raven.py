@@ -20,15 +20,19 @@ class Raven:
             except:
                 pass
 
-    def nodYes(self):
+    def nodYes(self) -> bool:
         self._checkController()
         if self.controller:
             self.controller.runScriptSub(2)
+            return True
+        return False
 
-    def nodNo(self):
+    def nodNo(self) -> bool:
         self._checkController()
         if self.controller:
             self.controller.runScriptSub(1)
+            return True
+        return False
 
     def _checkController(self):
         try:

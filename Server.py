@@ -31,11 +31,19 @@ class Server(flask.Flask):
 
     def startAnimation(self):
         animation_to_start = request.form["animation"]
+        command_succeeded = False
         if animation_to_start == "yes":
-            self._raven.nodYes()
+            command_succeeded = self._raven.nodYes()
         elif animation_to_start == "no":
-            self._raven.nodNo()
-        return flask.Response(flask.json.dumps({"message": ""}), status=200, mimetype='application/json')
+            command_succeeded = self._raven.nodNo()
+
+        if command_succeeded:
+            return flask.Response(flask.json.dumps({"message": "Animation Started"}), status=200,
+                                  mimetype='application/json')
+
+        return flask.Response(flask.json.dumps({"message": "Unable to start animation"}), status=200,
+                              mimetype='application/json')
+
 
 
 if __name__ == "__main__":
