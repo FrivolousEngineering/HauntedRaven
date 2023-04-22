@@ -4,4 +4,4 @@ Remote control for an animatronic raven (https://www.chickenprops.com/p/raven.ht
 This was originally developed for LARP. The raven needed to nod yes & no controlled by a game master. This is intended to run on a raspery PI. Game masters login on the webpage (probably via mobile) to control it. 
 
 
-For the instructions on how to setup a hotspot & captive portal, check https://pimylifeup.com/raspberry-pi-captive-portal/
+For the captive portal, use https://github.com/Splines/raspi-captive-portal
