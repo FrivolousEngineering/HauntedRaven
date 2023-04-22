@@ -41,7 +41,7 @@ class Server(flask.Flask):
             return flask.Response(flask.json.dumps({"message": "Animation Started"}), status=200,
                                   mimetype='application/json')
 
-        return flask.Response(flask.json.dumps({"message": "Unable to start animation"}), status=200,
+        return flask.Response(flask.json.dumps({"message": "Unable to start animation, controller not found"}), status=200,
                               mimetype='application/json')
 
 
