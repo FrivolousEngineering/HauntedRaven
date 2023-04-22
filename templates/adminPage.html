@@ -37,7 +37,7 @@ The Haunted Raven control page. Nothing to see here just yet. Please move along!
             },
             success: function(data)
             {
-                $("#message").html("");
+                $("#message").html(data["message"]);
             },
             error: function (xhr, description, error)
             {
