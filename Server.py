@@ -31,7 +31,7 @@ class Server(flask.Flask):
 
     def startAnimation(self):
         animation_to_start = request.form["animation"]
-        command_succeeded = False
+        command_succeeded = None
         if animation_to_start == "yes":
             command_succeeded = self._raven.nodYes()
         elif animation_to_start == "no":
@@ -39,6 +39,10 @@ class Server(flask.Flask):
 
         if command_succeeded:
             return flask.Response(flask.json.dumps({"message": "Animation Started"}), status=200,
+                                  mimetype='application/json')
+
+        if command_succeeded is None:
+            return flask.Response(flask.json.dumps({"message": "Unrecognised command"}), status=400,
                                   mimetype='application/json')
 
         return flask.Response(flask.json.dumps({"message": "Unable to start animation, controller not found"}), status=200,
