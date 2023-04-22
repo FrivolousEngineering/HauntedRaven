@@ -24,6 +24,7 @@ class Server(flask.Flask):
 
     def run(self, *args, **kwargs):
         kwargs["host"] = "0.0.0.0"
+        kwargs["port"] = "80"
         super().run(*args, **kwargs)
 
     def renderAdminPage(self):
