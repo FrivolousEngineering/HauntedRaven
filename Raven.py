@@ -2,23 +2,32 @@ from serial import SerialException
 
 import maestro
 
+from serial.tools import list_ports
+
 
 class Raven:
-    def __init__(self):
+    # For this to work you *must* set the maestro in "dual" mode via the official applications (via settings)
+    # By default it's in uart mode which will not work with this
+    def __init__(self): 
         print("Attempting to create serial")
 
         self.controller = None
         self.findController()
 
     def findController(self):
-        for i in range(0, 10):
+        for port in list_ports.comports():
+            if "Pololu Mini Maestro" not in port.description:
+                continue
             try:
-                port = "/dev/ttyACM%s" % i
-                self.controller = maestro.Controller(ttyStr= port)
-                print("Connected with serial %s" % port)
-                break
-            except:
-                pass
+                controller = maestro.Controller(ttyStr=port.device)
+                controller.getPosition(0)  # verify Maestro responds
+                self.controller = controller
+                print(f"Connected to Maestro command port: {port}")
+                return
+            except Exception as e:
+                print(f"{port} did not work: {e}")
+
+        raise RuntimeError("Could not find Maestro command port")
 
     def nodYes(self) -> bool:
         self._checkController()
@@ -38,6 +47,15 @@ class Raven:
         try:
             self.controller.getPosition(0)
         except (SerialException, AttributeError):
+            print("failed to write to controller")
             # We failed to write, so it must've gotten disconnected or we were never connected in the first place.
             self.controller = None
             self.findController()
+
+
+if __name__ == "__main__":
+
+    raven = Raven()
+
+    print(raven.nodYes())
+
