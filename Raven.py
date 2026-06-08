@@ -63,9 +63,6 @@ if __name__ == "__main__":
     raven.controller.runScriptSub(0)
     raven.controller.runScriptSub(1)
     raven.controller.runScriptSub(5)
-    while (raven.controller.getScriptStatus() == 0):
-        print("sleeping as command isn't done yet")
-        time.sleep(0.1)
 
     print('brr?')
     time.sleep(0.5)
