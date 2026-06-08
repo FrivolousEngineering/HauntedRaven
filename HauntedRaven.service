@@ -1,0 +1,16 @@
+# /etc/systemd/system/haunted-raven.service
+[Unit]
+Description=Haunted Raven Flask Server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=admin
+WorkingDirectory=/home/admin/HauntedRaven
+ExecStart=/usr/bin/python3 /home/admin/HauntedRaven/Server.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
