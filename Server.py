@@ -27,22 +27,23 @@ class Server(flask.Flask):
         kwargs["port"] = "5000"
         super().run(*args, **kwargs)
 
+    def getAllSounds(self):
+        return self._raven.getAnimations().keys()
+
     def renderAdminPage(self):
-        return render_template("adminPage.html")
+        return render_template("adminPage.html", data = self.getAllSounds())
 
     def startAnimation(self):
         animation_to_start = request.form["animation"]
-        command_succeeded = None
-        if animation_to_start == "yes":
-            command_succeeded = self._raven.nodYes()
-        elif animation_to_start == "no":
-            command_succeeded = self._raven.nodNo()
+
+        command_succeeded = self._raven.doCommand(animation_to_start)
 
         if command_succeeded:
             return flask.Response(flask.json.dumps({"message": "Animation Started"}), status=200,
                                   mimetype='application/json')
 
         if command_succeeded is None:
+            print()
             return flask.Response(flask.json.dumps({"message": "Unrecognised command"}), status=400,
                                   mimetype='application/json')
 

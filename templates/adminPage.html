@@ -5,16 +5,21 @@
 
 The Haunted Raven control page. Nothing to see here just yet. Please move along!
 
-<form action="startAnimation" method="post">
-    <input type="hidden" name="animation" value="yes">
-    <input type="submit" value="Nod Yes">
-</form>
-
-<form action="startAnimation" method="post">
-    <input type="hidden" name="animation" value="no">
-    <input type="submit" value="Nod No">
-</form>
-
+<table>
+    <tr>
+        <th><strong>Name</strong></th>
+        <th><strong>Control</strong></th>
+    </tr>
+    {% for item in data %}
+    <tr>
+            <th>{{item}}</th>
+            <th><form action="startAnimation" method="post">
+                <input type="hidden" name="animation" value={{ item }}>
+                <input type="submit" value="Play">
+            </form></th>
+    </tr>
+    {% endfor %}
+</table>
 
 <div id="message"></div>
 

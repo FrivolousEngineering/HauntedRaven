@@ -9,10 +9,38 @@ class Raven:
     # For this to work you *must* set the maestro in "dual" mode via the official applications (via settings)
     # By default it's in uart mode which will not work
     def __init__(self):
+
+        # Tie all animations to the sounds
+        self._animations = {
+            "All_will_be_made_clear_echo": 1,
+            "All_will_be_made_clear_normal": 2,
+            "Death_is_too_good_for_you": 3,
+            "Fuck_Off_Full": 4,
+            "Fuck_Off_Short": 5,
+            "Gimme_gimme_snack": 6,
+            "Gimme_Give_it_to_me": 7,
+            "I_Know_It_All_echo": 8,
+            "I_Know_It_All": 9,
+            "I_See_You_short": 10,
+            "Mine_short": 11,
+            "Nevermore_1": 12,
+            "Nevermore_2": 13,
+            "Nevermore_3": 14,
+            "No_absolutely_not": 15,
+            "Snack_short": 16,
+            "Theres_no_hiding_long": 17,
+            "Truth_wont_drown_echo": 18,
+            "Truth_wont_drown_short": 19,
+            "You_cant_hide_short": 20,
+        }
+
         self.controller = None
         self.audio_process = None
         self.findController()
         atexit.register(self.cleanup)
+
+    def getAnimations(self):
+        return self._animations
 
     def cleanup(self):
         if self.audio_process and self.audio_process.poll() is None:
@@ -66,12 +94,18 @@ class Raven:
         time.sleep(1)
         self.controller.runScriptSub(script_id)
 
+    def doCommand(self, command_name: str) -> bool:
+        if command_name not in self._animations:
+            return False
+        self.perform(self._animations[command_name], f"Sounds/{command_name}.mp3")
+        return True
+
     def nodYes(self) -> bool:
-        self.perform(5, "sounds/yes.mp3")
+        self.perform(5, "Sounds/yes.mp3")
         return True
 
     def nodNo(self) -> bool:
-        self.perform(1, "sounds/no.mp3")
+        self.perform(1, "Sounds/no.mp3")
         return True
 
     def _checkController(self):
