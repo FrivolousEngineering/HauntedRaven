@@ -90,8 +90,6 @@ class Raven:
         if audio_file:
             self.playAudio(audio_file)
 
-        self.controller.runScriptSub(0)
-        time.sleep(1)
         self.controller.runScriptSub(script_id)
 
     def doCommand(self, command_name: str) -> bool:
