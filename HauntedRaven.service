@@ -8,9 +8,14 @@ After=network-online.target
 Type=simple
 User=admin
 WorkingDirectory=/home/admin/HauntedRaven
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=PULSE_SERVER=unix:/run/user/1000/pulse/native
 ExecStart=/usr/bin/python3 /home/admin/HauntedRaven/Server.py
 Restart=on-failure
 RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
+
+
+
