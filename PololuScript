@@ -1,57 +1,518 @@
-### Sequence subroutines: ###
+# Pololu Maestro raven animation library
+# 0 headVertical
+# 1 headHorizontal
+# 2 wings
+# 3 beak
+# 5 hips
 
-# MoveToDefaultAndUnpower
-sub MoveToDefaultAndUnpower
-  500 5345 6016 5580 7008 4750 frame_0..4 # MoveToNeutral
-  500 0 0 0 0 0 frame_0..4 # DePower
-  return
-# NodNo
-sub NodNo
-  500 5345 6016 5580 7008 4750 frame_0..4 # NeutralPosition
-  500 5115 7812 5958 frame_1_3_4 # HeadRight
-  300 5600 7400 5875 7008 4750 frame_0..4 # MiddleBeakOpen
-  500 5465 8832 3652 7812 6235 frame_0..4 # HeadLeft
-  1000 5345 6016 5580 7008 4750 frame_0..4 # NeutralPositionEnd
-  return
-# NodYes
-sub NodYes
-  500 5345 6016 5580 7008 4710 frame_0..4 # NeutralPosition
-  900 5646 3514 7837 6021 frame_0_2..4 # HeadUp
-  1000 5345 5856 7008 4710 frame_0_2..4 # Frame 4
-  1000 5170 7744 6398 6190 frame_0_2..4 # HeadDownWingUp
-  1000 5345 5580 7902 4710 frame_0_2..4 # NeutralPositionEnd
+
+sub demo_idle
+  setup_smooth
+  neutral_pose
+  idle_scan
+  curious_look
   return
 
-sub frame_0..4
-  4 servo
-  3 servo
-  2 servo
-  1 servo
-  0 servo
+
+sub all_clear_echo
+  setup_dramatic
+  beak_open
+  6400 5 servo
+  200 delay
+  oracle_pose
+  idle_scan
+  beak_close
+  neutral_pose
+  return
+
+sub all_clear_normal
+  setup_dramatic
+  beak_open
+  6400 5 servo
+  200 delay
+  oracle_pose
+  idle_scan
+  beak_close
+  neutral_pose
+  return
+
+sub death_too_good
+  setup_smooth
+  beak_open
+  threat_lean
+  
+  wing_half_raise
+  
+  neutral_pose
+  return
+
+sub fuck_off_full
+  setup_aggressive
+  snap_left
+  speak_4_fast
+  wing_flap
+  snap_center
+  neutral_pose
+  return
+
+sub fuck_off_short
+  setup_aggressive
+  snap_left
+  bark_2
+  neutral_pose
+  return
+
+sub gimme_snack
+  setup_eager
+  beak_open
+  beg_pose
+  pecking_motion
+  beak_open
+  500 delay
+  neutral_pose
+  return
+
+sub give_it_to_me
+  setup_eager
+  beak_open
+  beg_pose
+  wing_twitches
+  500 delay
+  beak_close
+  500 delay
+  beak_open
+  bow_slow
+  neutral_pose
+  return
+
+sub i_know_it_all_echo
+  setup_slow
+  wing_half_raise
+  slow_speak_cycle
+  smug_pose
+  neutral_pose
+  return
+
+sub i_know_it_all
+  setup_slow
+  wing_half_raise
+  slow_speak_cycle
+  smug_pose
+  neutral_pose
+  return
+
+sub i_see_you
+  setup_aggressive
+  beak_open
+  slow_scan
+  slow_scan
+  neutral_pose
+  return
+
+sub mine_short
+  setup_aggressive
+  pecking_motion
+  bark_2
+  neutral_pose
+  return
+
+sub nevermore_1
+  setup_dramatic
+  oracle_pose
+  beak_open
+  1000 delay
+  beak_close
+  neutral_pose
+  return
+
+sub nevermore_2
+  setup_dramatic
+  snap_left
+  slow_speak_cycle
+  snap_right
+  neutral_pose
+  return
+
+sub nevermore_3
+  setup_aggressive
+  wing_half_raise
+  slow_speak_cycle
+  wing_drop
+  neutral_pose
+  return
+
+sub no_absolutely_not
+  setup_aggressive
+  head_shake
+  slow_speak_cycle
+  head_shake
+  neutral_pose
+  return
+
+sub snack_short
+  setup_eager
+  beg_pose
+  bark_2
+  neutral_pose
+  return
+
+sub theres_no_hiding_long
+  setup_dramatic
+  slow_scan
+  slow_speak_cycle
+  snap_right
+  stare
+  neutral_pose
+  return
+
+sub truth_wont_drown_echo
+  setup_slow
+  slow_speak_cycle
+  oracle_pose
+  slow_speak_cycle
+  bow_slow
+  slow_speak_cycle
+  neutral_pose
+  return
+
+sub truth_wont_drown_short
+  setup_dramatic
+  oracle_pose
+  speak_4_fast
+  neutral_pose
+  return
+
+sub you_cant_hide_short
+  setup_aggressive
+  snap_right
+  stare
+  bark_3
+  neutral_pose
+  return
+
+
+# ---------- shared poses / motions ----------
+
+sub setup_smooth
+  8 0 acceleration
+  25 0 speed
+  8 1 acceleration
+  30 1 speed
+  4 2 acceleration
+  20 2 speed
+  12 3 acceleration
+  60 3 speed
+  4 5 acceleration
+  18 5 speed
+  return
+
+sub setup_slow
+  4 0 acceleration
+  12 0 speed
+  4 1 acceleration
+  14 1 speed
+  3 2 acceleration
+  12 2 speed
+  8 3 acceleration
+  35 3 speed
+  3 5 acceleration
+  10 5 speed
+  return
+
+sub setup_dramatic
+  8 0 acceleration
+  22 0 speed
+  8 1 acceleration
+  24 1 speed
+  4 2 acceleration
+  18 2 speed
+  12 3 acceleration
+  55 3 speed
+  4 5 acceleration
+  16 5 speed
+  return
+
+sub setup_aggressive
+  30 0 acceleration
+  70 0 speed
+  30 1 acceleration
+  70 1 speed
+  12 2 acceleration
+  45 2 speed
+  30 3 acceleration
+  90 3 speed
+  3 5 acceleration
+  40 5 speed
+  return
+
+sub setup_eager
+  12 0 acceleration
+  35 0 speed
+  12 1 acceleration
+  35 1 speed
+  6 2 acceleration
+  25 2 speed
+  20 3 acceleration
+  80 3 speed
+  3 5 acceleration
+  40 5 speed
+  return
+
+sub neutral_pose
+  6200 0 servo
+  6000 1 servo
+  6000 2 servo
+  4000 3 servo
+  6200 5 servo
   moving_wait
   return
 
-sub frame_1_3_4
-  4 servo
-  3 servo
-  1 servo
+sub oracle_pose
+  6800 0 servo
+  6000 1 servo
+  6300 5 servo
   moving_wait
   return
 
-sub frame_0_2..4
-  4 servo
-  3 servo
-  2 servo
-  0 servo
+sub threat_lean
+  5000 0 servo
+  7200 1 servo
+  6700 2 servo
+  6900 5 servo
   moving_wait
+  return
+
+sub smug_pose
+  5600 0 servo
+  7200 1 servo
+  6400 5 servo
+  moving_wait
+  return
+
+sub beg_pose
+  6600 0 servo
+  6000 1 servo
+  6500 5 servo
+  moving_wait
+  250 delay
+  return
+
+sub stare
+  5400 0 servo
+  7600 1 servo
+  moving_wait
+  900 delay
+  return
+
+sub snap_left
+  5600 0 servo
+  4700 1 servo
+  moving_wait
+  return
+
+sub snap_right
+  5600 0 servo
+  7600 1 servo
+  moving_wait
+  return
+
+sub snap_center
+  6200 0 servo
+  6000 1 servo
+  moving_wait
+  150 delay
+  return
+
+sub slow_scan
+  5600 0 servo
+  4700 1 servo
+  moving_wait
+  900 delay
+  6700 0 servo
+  7300 1 servo
+  moving_wait
+  1000 delay
+  return
+
+sub slow_head_turn
+  5600 0 servo
+  4800 1 servo
+  moving_wait
+  800 delay
+  5700 0 servo
+  7200 1 servo
+  moving_wait
+  800 delay
+  return
+
+sub head_shake
+  5600 1 servo
+  120 delay
+  6800 1 servo
+  120 delay
+  5300 1 servo
+  120 delay
+  7000 1 servo
+  120 delay
+  6000 1 servo
+  moving_wait
+  return
+
+sub wing_half_raise
+  6700 2 servo
+  6600 5 servo
+  moving_wait
+  250 delay
+  return
+
+sub wing_drop
+  6000 2 servo
+  6200 5 servo
+  moving_wait
+  return
+
+sub wing_twitches
+  6600 2 servo
+  100 delay
+  6000 2 servo
+  120 delay
+  6650 2 servo
+  100 delay
+  6000 2 servo
+  moving_wait
+  return
+
+sub wing_flap
+  6850 2 servo
+  6500 5 servo
+  100 delay
+  6000 2 servo
+  6100 5 servo
+  120 delay
+  6900 2 servo
+  6500 5 servo
+  100 delay
+  6000 2 servo
+  6200 5 servo
+  moving_wait
+  return
+
+sub pecking_motion
+  7000 0 servo
+  7200 3 servo
+  120 delay
+  5600 0 servo
+  4000 3 servo
+  120 delay
+  7000 0 servo
+  7200 3 servo
+  120 delay
+  6200 0 servo
+  4000 3 servo
+  moving_wait
+  return
+
+sub bow_slow
+  7600 0 servo
+  5600 5 servo
+  moving_wait
+  900 delay
+  6200 0 servo
+  6400 5 servo
+  moving_wait
+  return
+
+
+# ---------- speech timing blocks ----------
+
+sub bark_2
+  beak_open
+  180 delay
+  beak_close
+  160 delay
+  beak_open
+  220 delay
+  beak_close
+  250 delay
+  return
+
+sub bark_3
+  bark_2
+  beak_open
+  180 delay
+  beak_close
+  300 delay
+  return
+
+sub speak_4_fast
+  fast_speak_cycle
+  fast_speak_cycle
+  fast_speak_cycle
+  fast_speak_cycle
+  return
+
+sub speak_cycle
+  7000 3 servo
+  6600 0 servo
+  750 delay
+  4000 3 servo
+  6200 0 servo
+  750 delay
+  return
+
+sub fast_speak_cycle
+  7200 3 servo
+  6400 0 servo
+  750 delay
+  4000 3 servo
+  6100 0 servo
+  750 delay
+  return
+
+sub slow_speak_cycle
+  6900 3 servo
+  6600 0 servo
+  750 delay
+  4000 3 servo
+  6200 0 servo
+  return
+
+sub beak_open
+  7200 3 servo
+  return
+
+sub beak_close
+  4000 3 servo
+  return
+
+
+sub idle_scan
+  5800 0 servo
+  4800 1 servo
+  moving_wait
+  400 delay
+  6500 0 servo
+  7200 1 servo
+  moving_wait
+  600 delay
+  6100 0 servo
+  5900 1 servo
+  moving_wait
+  300 delay
+  return
+
+sub curious_look
+  5400 0 servo
+  7600 1 servo
+  6000 5 servo
+  moving_wait
+  700 delay
   return
 
 sub moving_wait
   begin
     get_moving_state
   while
-    # wait until it is no longer moving
   repeat
   return
-
 
